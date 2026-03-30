@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aptly UI Showcase</title>
+  <link rel="stylesheet" href="./src/styles/theme.css">
+  <!-- Tailwind for basic layout class replication -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: var(--aptly-bg);
+      color: var(--aptly-text-secondary);
+      font-family: var(--aptly-font-body);
+      padding: 2rem;
+    }
+    .primary-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: var(--aptly-radius); transition: all 0.2s;
+      background-color: var(--aptly-primary); color: white;
+      padding: 0.5rem 1rem; font-weight: 500;
+    }
+    .primary-btn:hover { background-color: var(--aptly-primary-hover); }
+    
+    .outline-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: var(--aptly-radius); transition: all 0.2s;
+      border: 2px solid var(--aptly-primary); color: var(--aptly-primary);
+      padding: 0.5rem 1rem; background: transparent; font-weight: 500;
+    }
+    .outline-btn:hover { background-color: var(--aptly-primary-bg); }
+    
+    .content-card {
+      background-color: var(--aptly-surface);
+      border-radius: var(--aptly-radius);
+      border: 1px solid var(--aptly-border);
+      box-shadow: var(--aptly-shadow-sm);
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="max-w-4xl mx-auto space-y-12">
+    <header>
+      <h1 class="text-3xl font-bold" style="color: var(--aptly-text); font-family: var(--aptly-font-heading)">Aptly UI Showcase</h1>
+      <p class="mt-2 text-lg">A visual catalog of our core tokens and components.</p>
+    </header>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold" style="color: var(--aptly-text); font-family: var(--aptly-font-heading)">1. Colors</h2>
+      <div class="flex gap-4">
+        <div class="w-16 h-16 rounded shadow" style="background: var(--aptly-primary)" title="Primary"></div>
+        <div class="w-16 h-16 rounded shadow" style="background: var(--aptly-accent)" title="Accent"></div>
+        <div class="w-16 h-16 rounded shadow border" style="background: var(--aptly-bg)" title="Background"></div>
+        <div class="w-16 h-16 rounded shadow border" style="background: var(--aptly-surface)" title="Surface"></div>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold" style="color: var(--aptly-text); font-family: var(--aptly-font-heading)">2. Buttons</h2>
+      <div class="flex gap-4 items-center">
+        <button class="primary-btn">Primary Action</button>
+        <button class="outline-btn">Outline Action</button>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold" style="color: var(--aptly-text); font-family: var(--aptly-font-heading)">3. Cards</h2>
+      <div class="content-card">
+        <h3 class="text-lg font-bold mb-2" style="color: var(--aptly-text); font-family: var(--aptly-font-heading)">Card Title</h3>
+        <p>This is a standard content card demonstrating our precise container shadow, border radius, and surface background color tokens.</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  /* Elegant, Timeless Theme */
+  --aptly-primary: #111827; /* Sophisticated deep almost-black */
+  --aptly-primary-hover: #374151;
+  --aptly-primary-bg: #F3F4F6;
+  
+  --aptly-surface: #FFFFFF;
+  --aptly-bg: #F9FAFB;
+  
+  --aptly-text: #111827;
+  --aptly-text-secondary: #4B5563;
+  --aptly-text-muted: #9CA3AF;
+  
+  --aptly-border: rgba(0, 0, 0, 0.08); /* Faint, translucent border */
+  --aptly-border-light: rgba(0, 0, 0, 0.04);
+  --aptly-border-focus: rgba(17, 24, 39, 0.4); /* Elegant ring */
+  
+  --aptly-success: #10B981;
+  --aptly-warning: #F59E0B;
+  --aptly-error: #EF4444;
+  
+  /* Diffuse, Modern Shadows (Un-boxy) */
+  --aptly-shadow-sm: 0 4px 12px -2px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.02);
+  --aptly-shadow-md: 0 10px 30px -4px rgba(0,0,0,0.05), 0 4px 10px -4px rgba(0,0,0,0.03);
+  --aptly-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.08), 0 10px 20px -8px rgba(0,0,0,0.04);
+  
+  /* Soft, Organic Radii */
+  --aptly-radius-sm: 8px;
+  --aptly-radius: 12px;
+  --aptly-radius-lg: 16px;
+  --aptly-radius-full: 9999px;
+  
+  --aptly-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --aptly-transition: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+body {
+  background: var(--aptly-bg);
+  color: var(--aptly-text);
+  font-family: var(--aptly-font-body);
+  /* Better font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
