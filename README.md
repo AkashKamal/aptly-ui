@@ -1,59 +1,40 @@
-# @aptly/ui Component Library
+# @aptly/ui Component Library (Hyper-Elegant V2)
 
-A premium, elegant, and timeless React component library built for modular MSME applications. 
-This library powers the frontend UI for the Aptly Modular Platform.
+A premium, hyper-elegant, and blazing-fast React component library built for modular MSME applications. 
+This library powers the frontend UI for the Aptly Modular Architecture.
 
-## Ideology: Elegant & Timeless Design
-This UI diverges from traditional "boxy" enterprise templates to offer a highly sophisticated, beautiful user experience:
-- **Softer Radii**: We use `12px` to `16px` border radii (`--aptly-radius`) for a fluid, organic feel.
-- **Diffuse Elevation**: We use deep, blurred shadows (`--aptly-shadow-md` and `lg`) instead of harsh drops. Interactive elements feel like they are floating.
-- **Subtle Boundaries**: Hard structural borders are avoided. We use translucent borders (`rgba(0,0,0,0.04)`) to gently define zones without boxing them in.
-- **Spaciousness**: Generous padding is mandatory. Space equals elegance.
-- **Micro-Interactions**: Hover and active states utilize smooth CSS transforms (`scale(0.98)` or `-translate-y-1`) for a fluid, tactile feel rather than sharp color flips.
+## Ideology: Hyper-Elegant & Blazing Fast
+This UI pushes past traditional design tokens into premium, GPU-accelerated territory:
+- **Hardware-Accelerated Speed:** We strictly use `translateZ(0)` and `transform3d` CSS scaling. This forces the client GPU to natively render micro-interactions (like Button hovers or Checkbox checks) at buttery 60fps.
+- **Micro-Borders & Glassmorphism:** We avoid harsh `1px` lines in favor of sub-pixel Retina inset box-shadows (`inset 0 0 0 1.5px rgba(...)`) and frosted glass overlays (`backdrop-filter`).
+- **Spring Easing:** Hard transitions are replaced with an organic spring cubic bezier (`cubic-bezier(0.19, 1, 0.22, 1)`) for a hyper-realistic, fluid feel.
+- **Dynamic Density:** All internal paddings (`var(--aptly-pad-md)`) are computationally scaled in CSS via a global density configuration multiplier token.
 
-## Library Architecture
-- **Core Builder**: Built using `tsup` into dual CJS & ESM modules.
-- **Styling**: Vanilla CSS custom properties (`src/styles/theme.css`) to ensure framework-agnostic token management.
-- **Dynamic Theming**: The `ThemeProvider.tsx` context dynamically overwrites CSS variables on the `:root` to allow client applications to inject their own branding (colors, radii).
-
-## Running the Showcase
-To visually test the components, run the local Vite showcase:
-```bash
-npm run dev
-```
+## Provided Components
+All components feature extensive internal variations (e.g. sizes, layouts, visual geometries) out of the box:
+- `Button` (Sizes, Variants, Pills/Squares)
+- `ContentCard` (Dynamic elevations, interactions, glass/flat renders)
+- `TextInput` & `SearchBar` (Sizes, fluid icons, shortcut badges)
+- `Avatar` & `Profile`
+- `Badge` & `Skeleton`
+- `Switch`, `Checkbox`, `Radio`, `Slider`, `ProgressBar`
+- `Modal`, `Drawer`, `Tooltip`
+- `Sidebar`, `Header`, `Tabs`, `DataTable`
 
 ---
 
 # <for_ai_agents> 🤖 STRICT HAND-OFF INSTRUCTIONS
-**CRITICAL: If you are an AI agent picking up this codebase to continue work, you MUST adhere strictly to the following rules to maintain the aesthetic architecture.**
+**CRITICAL: If you are an AI agent picking up this codebase to continue building a client application, you MUST adhere strictly to the following rules to maintain the aesthetic architecture.**
 
-### 1. The Elegant Foundation (Do Not Alter)
-The following foundational components are precisely tuned to the elegant aesthetic. Do not make them boxy.
-- `Button.tsx` (Supports solid, outline, ghost variants with fluid animations)
-- `ContentCard.tsx` (Supports Elevation layers 1, 2, 3 with hover lift transformations)
-- `TextInput.tsx` (Minimal fluid borders with focused ring)
-- `Avatar.tsx` (Circular, shadow-backed image wrappers)
-- `Badge.tsx` (Soft and solid semantic labels)
-- `Switch.tsx` (Smooth animated toggles)
+### 1. Processing `aptly-theme.json`
+If the user hands you an `aptly-theme.json` file (exported from the Configurator module), you must use it as the fundamental design config for the incoming client app. 
 
-### 2. Pending Components to Scaffold
-The user may ask you to build more UI components. When building the following, **you must use the existing `--aptly-` CSS variables** and match the padding/shadow elegance of `ContentCard`:
-- `DataTable.tsx` (Must use transparent borders and soft `var(--aptly-bg)` hover highlights per row)
-- `Modal.tsx` & `Dialog.tsx` (Must use absolute centering, a subtle backdrop blur `backdrop-filter: blur(4px)`, and `var(--aptly-shadow-lg)`)
-- `Drawer.tsx` (Slide-out panel for forms)
-- `Tabs.tsx` (Smooth sliding active-state indicator)
-- `Skeleton.tsx` (Pulse animation for loading states)
-- `Sidebar.tsx` (Elegant collapsible application navigation)
-- `Tooltip.tsx` (Minimal floating text wrapper)
-
-### 3. Processing `aptly-theme.json`
-If the user hands you a file named `aptly-theme.json` (exported from the Configurator module), you must use it as the fundamental design config for the client application you are building. It will dictate the exact `--aptly-` custom properties natively via the ThemeProvider.
-
-Example integration pattern when scaffolding a new Next.js or Vite React App:
+Example integration pattern when scaffolding a new React app:
 ```tsx
 import themeConfig from './path/to/aptly-theme.json'; // The exported blob
-import { ThemeProvider, AppShell, Header, Sidebar } from '@aptly/ui';
+import { ThemeProvider, Header, Sidebar, ContentCard, Button } from '@aptly/ui';
 
+// Note: Config includes complex tuning like 'density', 'cardStyle', 'animationSpeed', 'focusRingStyle'
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider config={themeConfig}>
@@ -69,10 +50,9 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### 4. Strict Coding Rules for New Work
-- **NEVER** hardcode hex colors or explicit pixel radii directly in the React components. Always use `var(--aptly-surface)`, `var(--aptly-text)`, `var(--aptly-radius-lg)`, etc.
-- **NEVER** use harsh Tailwind default shadows. Only use `var(--aptly-shadow-sm/md/lg)`.
+### 2. Strict Coding Rules for New UI Component Work
+- **NEVER** build structural elements with raw Tailwind `transition-all duration-200`. You **MUST** use the custom tokens (`duration-[var(--aptly-transition)]`, `ease-[var(--aptly-ease-spring)]`).
+- **ALWAYS** include `aptly-hardware` class on anything that moves or scales on hover to prevent repaints.
+- **NEVER** use explicit pixel padding classes (`p-4`). Always use semantic padding variables (`p-[var(--aptly-pad-md)]`) so the entire UI scales beautifully when the user toggles the global `Density` Config.
 - **ALWAYS** wrap dynamic class strings in the exported `cn()` utility function from `src/utils.ts`.
-- **ALWAYS** export your new component in `src/index.ts`.
-- **ALWAYS** add a functional demonstration of your new component to `showcase/App.tsx` so the user can verify it visually via `npm run dev`.
 </for_ai_agents>

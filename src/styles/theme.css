@@ -1,27 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  /* Elegant, Timeless Theme */
-  --aptly-primary: #111827; /* Sophisticated deep almost-black */
+  /* Elegant, Timeless Theme Core */
+  --aptly-primary: #111827; 
   --aptly-primary-hover: #374151;
   --aptly-primary-bg: #F3F4F6;
   
   --aptly-surface: #FFFFFF;
+  --aptly-surface-glass: rgba(255, 255, 255, 0.75);
   --aptly-bg: #F9FAFB;
   
   --aptly-text: #111827;
   --aptly-text-secondary: #4B5563;
   --aptly-text-muted: #9CA3AF;
   
-  --aptly-border: rgba(0, 0, 0, 0.08); /* Faint, translucent border */
+  /* Micro-borders for Retina sharpness */
+  --aptly-border: rgba(0, 0, 0, 0.08); 
   --aptly-border-light: rgba(0, 0, 0, 0.04);
-  --aptly-border-focus: rgba(17, 24, 39, 0.4); /* Elegant ring */
+  --aptly-border-focus: rgba(17, 24, 39, 0.4); 
   
   --aptly-success: #10B981;
   --aptly-warning: #F59E0B;
   --aptly-error: #EF4444;
   
-  /* Diffuse, Modern Shadows (Un-boxy) */
+  /* Diffuse, Modern Shadows */
   --aptly-shadow-sm: 0 4px 12px -2px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.02);
   --aptly-shadow-md: 0 10px 30px -4px rgba(0,0,0,0.05), 0 4px 10px -4px rgba(0,0,0,0.03);
   --aptly-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.08), 0 10px 20px -8px rgba(0,0,0,0.04);
@@ -32,8 +34,24 @@
   --aptly-radius-lg: 16px;
   --aptly-radius-full: 9999px;
   
+  /* Dynamic Density Scaling */
+  --aptly-spacing-scale: 1;
+  --aptly-pad-xs: calc(0.25rem * var(--aptly-spacing-scale));
+  --aptly-pad-sm: calc(0.5rem * var(--aptly-spacing-scale));
+  --aptly-pad-md: calc(1rem * var(--aptly-spacing-scale));
+  --aptly-pad-lg: calc(1.5rem * var(--aptly-spacing-scale));
+  --aptly-pad-xl: calc(2.5rem * var(--aptly-spacing-scale));
+
+  /* Blazing Fast Hardware Animations */
+  --aptly-speed: 250ms;
+  --aptly-ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
+  --aptly-transition: var(--aptly-speed) var(--aptly-ease-spring);
+  
+  /* Accessibility Rings */
+  --aptly-ring-width: 3px;
+  --aptly-ring-offset: 2px;
+  
   --aptly-font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --aptly-transition: 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after {
@@ -45,7 +63,36 @@ body {
   background: var(--aptly-bg);
   color: var(--aptly-text);
   font-family: var(--aptly-font-body);
-  /* Better font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base Utility Classes for Hyper-Elegance */
+.aptly-glass {
+  background: var(--aptly-surface-glass);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: inset 0 0 0 0.5px var(--aptly-border-light);
+}
+
+.aptly-hardware {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--aptly-border);
+  border-radius: var(--aptly-radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--aptly-text-muted);
 }
