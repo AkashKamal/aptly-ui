@@ -16,21 +16,22 @@ export interface DataTableProps<T> {
 }
 
 export function DataTable<T extends Record<string, any>>({ 
-  columns, data, density = 'comfortable', striped = false, borderless = false 
+  columns, data, striped = false, borderless = false 
 }: DataTableProps<T>) {
   
   return (
     <div className="w-full overflow-x-auto rounded-[var(--aptly-radius-lg)] shadow-[var(--aptly-shadow-sm)] border border-[var(--aptly-border-light)] bg-[var(--aptly-surface)] aptly-hardware">
-      <table className={cn("w-full text-left text-sm whitespace-nowrap", !borderless && "divide-y divide-[var(--aptly-border-light)]")}>
-        <thead className="bg-[var(--aptly-bg)] text-[var(--aptly-text-secondary)] font-medium">
+      <table className={cn("w-full text-left whitespace-nowrap", !borderless && "divide-y divide-[var(--aptly-border-light)]")}>
+        <thead className="bg-[var(--aptly-bg)] text-[var(--aptly-text-secondary)] font-bold">
           <tr>
             {columns.map(col => (
               <th 
                 key={col.key} 
-                className={cn(
-                  "px-[var(--aptly-pad-md)] font-semibold tracking-tight whitespace-nowrap text-xs uppercase opacity-75",
-                  density === 'compact' ? "py-3" : density === 'spacious' ? "py-6" : "py-4"
-                )}
+                className="uppercase tracking-widest opacity-70"
+                style={{
+                  padding: 'var(--aptly-pad-md)',
+                  fontSize: 'calc(10px * var(--aptly-font-scale))'
+                }}
               >
                 {col.header}
               </th>
@@ -43,17 +44,20 @@ export function DataTable<T extends Record<string, any>>({
                key={i} 
                className={cn(
                  "hover:bg-[var(--aptly-bg)] transition-colors duration-[var(--aptly-speed)] cursor-default group",
-                 striped && i % 2 !== 0 && "bg-[var(--aptly-bg)] opacity-[0.85]"
+                 striped && i % 2 !== 0 && "bg-[var(--aptly-bg)]/50"
                )}
              >
                 {columns.map((col, idx) => (
                   <td 
                     key={col.key} 
                     className={cn(
-                      "px-[var(--aptly-pad-md)] transition-colors",
-                      density === 'compact' ? "py-2.5" : density === 'spacious' ? "py-5" : "py-3.5",
-                      idx === 0 && "font-medium"
+                      "transition-colors",
+                      idx === 0 && "font-semibold"
                     )}
+                    style={{
+                      padding: 'var(--aptly-pad-md)',
+                      fontSize: 'calc(0.875rem * var(--aptly-font-scale))'
+                    }}
                   >
                      {col.render ? col.render(row) : row[col.key]}
                   </td>

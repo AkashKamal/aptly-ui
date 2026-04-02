@@ -1,36 +1,44 @@
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import { cn } from '../utils';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: 'success' | 'warning' | 'error' | 'neutral' | 'primary';
-  appearance?: 'soft' | 'solid';
+  appearance?: 'solid' | 'soft' | 'outline';
 }
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant = 'neutral', appearance = 'soft', ...props }, ref) => {
+  ({ className, variant = 'neutral', appearance = 'soft', style, ...props }, ref) => {
     return (
       <span
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-xs font-medium tracking-[0.02em]",
+          "inline-flex items-center rounded-full font-bold tracking-wider uppercase select-none border",
           {
-            "bg-[var(--aptly-primary-bg)] text-[var(--aptly-primary)]": variant === 'primary' && appearance === 'soft',
-            "bg-[var(--aptly-primary)] text-white": variant === 'primary' && appearance === 'solid',
+            "bg-[var(--aptly-primary)] text-white border-transparent": variant === 'primary' && appearance === 'solid',
+            "bg-[var(--aptly-primary-bg)] text-[var(--aptly-primary)] border-transparent": variant === 'primary' && appearance === 'soft',
             
-            "bg-[#E6F4EA] text-[#1E8E3E]": variant === 'success' && appearance === 'soft',
-            "bg-[#1E8E3E] text-white": variant === 'success' && appearance === 'solid',
+            "bg-[var(--aptly-success)] text-white border-transparent": variant === 'success' && appearance === 'solid',
+            "bg-emerald-50 text-[var(--aptly-success)] border-emerald-100": variant === 'success' && appearance === 'soft',
             
-            "bg-[#FEF7E0] text-[#E37400]": variant === 'warning' && appearance === 'soft',
-            "bg-[#F9AB00] text-white": variant === 'warning' && appearance === 'solid',
+            "bg-[var(--aptly-warning)] text-white border-transparent": variant === 'warning' && appearance === 'solid',
+            "bg-amber-50 text-[var(--aptly-warning)] border-amber-100": variant === 'warning' && appearance === 'soft',
             
-            "bg-[#FCE8E6] text-[#D93025]": variant === 'error' && appearance === 'soft',
-            "bg-[#D93025] text-white": variant === 'error' && appearance === 'solid',
+            "bg-[var(--aptly-error)] text-white border-transparent": variant === 'error' && appearance === 'solid',
+            "bg-red-50 text-[var(--aptly-error)] border-red-100": variant === 'error' && appearance === 'soft',
             
-            "bg-[#F1F3F4] text-[#3C4043]": variant === 'neutral' && appearance === 'soft',
-            "bg-[#5F6368] text-white": variant === 'neutral' && appearance === 'solid',
+            "bg-[var(--aptly-bg)] text-[var(--aptly-text-secondary)] border-[var(--aptly-border)]": variant === 'neutral',
           },
           className
         )}
+        style={{
+          paddingLeft: 'calc(0.6rem * var(--aptly-scale))',
+          paddingRight: 'calc(0.6rem * var(--aptly-scale))',
+          paddingTop: 'calc(0.15rem * var(--aptly-scale))',
+          paddingBottom: 'calc(0.15rem * var(--aptly-scale))',
+          fontSize: 'calc(10px * var(--aptly-font-scale))',
+          lineHeight: '1',
+          ...style
+        }}
         {...props}
       />
     );

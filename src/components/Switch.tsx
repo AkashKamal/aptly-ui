@@ -1,46 +1,49 @@
-import React from 'react';
+import * as React from 'react';
+import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '../utils';
 
-export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  label?: string;
-}
-
-export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
-  ({ className, label, id, ...props }, ref) => {
-    const switchId = id || Math.random().toString(36).substring(7);
-    
-    return (
-      <div className="flex items-center gap-3">
+const Switch = React.forwardRef<
+  React.ElementRef<typeof SwitchPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> & { label?: string }
+>(({ className, label, id, ...props }, ref) => {
+  const switchId = id || React.useId();
+  return (
+    <div className="flex items-center" style={{ gap: 'var(--aptly-pad-sm)' }}>
+      <SwitchPrimitive.Root
+        className={cn(
+          "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--aptly-border-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--aptly-bg)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-[var(--aptly-primary)] data-[state=unchecked]:bg-[var(--aptly-border)] shadow-inner aptly-hardware",
+          className
+        )}
+        style={{
+          height: 'calc(1.5rem * var(--aptly-scale))',
+          width: 'calc(2.75rem * var(--aptly-scale))',
+        }}
+        id={switchId}
+        {...props}
+        ref={ref}
+      >
+        <SwitchPrimitive.Thumb
+          className={cn(
+            "pointer-events-none block rounded-full bg-white shadow-[var(--aptly-shadow-sm)] ring-0 transition-transform data-[state=checked]:translate-x-[calc(1.25rem * var(--aptly-scale))] data-[state=unchecked]:translate-x-0"
+          )}
+          style={{
+            height: 'calc(1.25rem * var(--aptly-scale))',
+            width: 'calc(1.25rem * var(--aptly-scale))'
+          }}
+        />
+      </SwitchPrimitive.Root>
+      {label && (
         <label
           htmlFor={switchId}
-          className={cn(
-            "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-[var(--aptly-transition)] focus-within:ring-4 focus-within:ring-[var(--aptly-border-focus)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--aptly-bg)] shadow-inner",
-            props.checked ? "bg-[var(--aptly-primary)]" : "bg-[var(--aptly-border)]",
-            props.disabled && "cursor-not-allowed opacity-50",
-            className
-          )}
+          className="font-semibold text-[var(--aptly-text)] select-none cursor-pointer"
+          style={{ fontSize: 'calc(0.875rem * var(--aptly-font-scale))' }}
         >
-          <input
-            type="checkbox"
-            id={switchId}
-            ref={ref}
-            className="peer sr-only"
-            {...props}
-          />
-          <span
-            className={cn(
-              "pointer-events-none block h-5 w-5 rounded-full bg-white shadow-[var(--aptly-shadow-sm)] ring-0 transition-transform duration-[var(--aptly-transition)]",
-              props.checked ? "translate-x-5" : "translate-x-[2px]"
-            )}
-          />
+          {label}
         </label>
-        {label && (
-          <span className="text-sm font-medium text-[var(--aptly-text)] select-none">
-            {label}
-          </span>
-        )}
-      </div>
-    );
-  }
-);
-Switch.displayName = "Switch";
+      )}
+    </div>
+  );
+});
+Switch.displayName = SwitchPrimitive.Root.displayName;
+
+export { Switch };

@@ -1,60 +1,71 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '../utils';
 
+const TooltipProvider = TooltipPrimitive.Provider;
+
+const TooltipRoot = TooltipPrimitive.Root;
+
+const TooltipTrigger = TooltipPrimitive.Trigger;
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & { sideOffset?: number, position?: 'top' | 'bottom' | 'left' | 'right' }
+>(({ className, sideOffset = 4, position = 'top', ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    side={position}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-[9999] overflow-hidden rounded-[var(--aptly-radius-sm)] bg-[var(--aptly-primary)] px-3 py-1.5 font-semibold text-white shadow-[var(--aptly-shadow-md)] aptly-hardware animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    style={{
+      fontSize: 'calc(11px * var(--aptly-font-scale))',
+      paddingLeft: 'var(--aptly-pad-sm)',
+      paddingRight: 'var(--aptly-pad-sm)',
+      paddingTop: 'calc(0.25rem * var(--aptly-scale))',
+      paddingBottom: 'calc(0.25rem * var(--aptly-scale))'
+    }}
+    {...props}
+  >
+    {props.children}
+    <TooltipPrimitive.Arrow className="fill-[var(--aptly-primary)]" />
+  </TooltipPrimitive.Content>
+));
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+
+// Legacy support for the simple API
 export interface TooltipProps {
+  content: React.ReactNode;
   children: React.ReactNode;
-  content: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
-  delay?: number;
   className?: string;
 }
 
-export function Tooltip({ children, content, position = 'top', delay = 200, className }: TooltipProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  // Mutable ref bypass for simple timeout logic in react
-  let timeout: ReturnType<typeof setTimeout>;
-
-  const show = () => {
-    timeout = setTimeout(() => setIsVisible(true), delay);
-  };
-  
-  const hide = () => {
-    clearTimeout(timeout);
-    setIsVisible(false);
-  };
-
+/**
+ * Tooltip component for showing contextual information.
+ * Supports both simple API (via props) and Radix-style composable API.
+ */
+export function Tooltip({ content, children, position = 'top', className }: TooltipProps) {
   return (
-    <div 
-      className={cn("relative inline-flex", className)} 
-      onMouseEnter={show} 
-      onMouseLeave={hide}
-      onFocus={show}
-      onBlur={hide}
-    >
-      {children}
-      {isVisible && (
-        <div 
-          className={cn(
-             "absolute z-50 px-2.5 py-1.5 text-[11px] font-semibold tracking-wide text-white bg-gray-900 rounded-[var(--aptly-radius-sm)] shadow-[var(--aptly-shadow-md)] whitespace-nowrap aptly-hardware pointer-events-none animate-in fade-in zoom-in-95 duration-[150ms]",
-             {
-                "bottom-full left-1/2 -translate-x-1/2 mb-2": position === 'top',
-                "top-full left-1/2 -translate-x-1/2 mt-2": position === 'bottom',
-                "right-full top-1/2 -translate-y-1/2 mr-2": position === 'left',
-                "left-full top-1/2 -translate-y-1/2 ml-2": position === 'right',
-             }
-          )}
-        >
+    <TooltipProvider>
+      <TooltipRoot>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent position={position} className={className}>
           {content}
-          
-          {/* Arrow */}
-          <div className={cn("absolute w-2 h-2 bg-gray-900 transform rotate-45", {
-             "bottom-[-4px] left-1/2 -translate-x-1/2": position === 'top',
-             "top-[-4px] left-1/2 -translate-x-1/2": position === 'bottom',
-             "right-[-4px] top-1/2 -translate-y-1/2": position === 'left',
-             "left-[-4px] top-1/2 -translate-y-1/2": position === 'right',
-          })} />
-        </div>
-      )}
-    </div>
+        </TooltipContent>
+      </TooltipRoot>
+    </TooltipProvider>
   );
 }
+
+export { 
+  TooltipRoot, 
+  TooltipTrigger, 
+  TooltipContent, 
+  TooltipProvider,
+  Tooltip as TooltipSimple 
+};
+
+export default Tooltip;

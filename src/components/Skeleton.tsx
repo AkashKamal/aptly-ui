@@ -1,24 +1,27 @@
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import { cn } from '../utils';
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'text' | 'circular' | 'rectangular';
+  variant?: 'rect' | 'circle' | 'text';
+  width?: string | number;
+  height?: string | number;
 }
 
 export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ className, variant = 'text', ...props }, ref) => {
+  ({ className, variant = 'rect', width, height, style, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
-          "animate-pulse bg-[var(--aptly-border-light)]",
-          {
-            "rounded-[var(--aptly-radius-sm)] h-4 w-3/4": variant === 'text',
-            "rounded-full h-12 w-12": variant === 'circular',
-            "rounded-[var(--aptly-radius-lg)] h-24 w-full": variant === 'rectangular',
-          },
+          "animate-pulse bg-[var(--aptly-border-light)] aptly-hardware",
+          variant === 'circle' ? "rounded-full" : "rounded-[var(--aptly-radius-sm)]",
           className
         )}
+        style={{
+          width: width,
+          height: height || (variant === 'text' ? '1em' : undefined),
+          ...style
+        }}
         {...props}
       />
     );

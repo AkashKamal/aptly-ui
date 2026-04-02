@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { type InputHTMLAttributes } from 'react';
 import { Search } from 'lucide-react';
 import { cn } from '../utils';
 
@@ -10,12 +10,12 @@ export interface SearchBarProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
-  ({ className, iconPosition = 'left', shortcut, inputSize = 'md', variant = 'solid', ...props }, ref) => {
+  ({ className, iconPosition = 'left', shortcut, inputSize = 'md', variant = 'solid', style, ...props }, ref) => {
     return (
       <div className={cn("relative flex items-center w-full", className)}>
         {iconPosition === 'left' && (
-          <div className="absolute left-3 z-10 text-[var(--aptly-text-muted)] pointer-events-none">
-            <Search size={inputSize === 'sm' ? 14 : inputSize === 'lg' ? 20 : 18} strokeWidth={2} />
+          <div className="absolute left-3 z-10 text-[var(--aptly-text-muted)] pointer-events-none flex items-center justify-center">
+            <Search size={18} strokeWidth={2.5} style={{ transform: 'scale(var(--aptly-font-scale))' }} />
           </div>
         )}
         
@@ -24,35 +24,25 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
           type="search"
           placeholder="Search..."
           className={cn(
-            "w-full rounded-[var(--aptly-radius-full)] font-medium aptly-hardware transition-all duration-[var(--aptly-transition)] focus:border-transparent focus:ring-[var(--aptly-ring-width)] focus:ring-[var(--aptly-border-focus)] placeholder:text-[var(--aptly-text-muted)]",
-            
-            // Sizes
+            "w-full rounded-[var(--aptly-radius-full)] font-medium aptly-hardware transition-all duration-[var(--aptly-transition)] focus:border-transparent focus:ring-[var(--aptly-ring-width)] focus:ring-[var(--aptly-border-focus)] placeholder:text-[var(--aptly-text-muted)] outline-none",
             {
-               "h-8 text-[13px]": inputSize === 'sm',
-               "h-10 text-sm": inputSize === 'md',
-               "h-14 text-base": inputSize === 'lg',
-            },
-            
-            // Variants
-            {
-               "bg-[var(--aptly-surface)] shadow-[inset_0_0_0_1px_var(--aptly-border-light)] hover:shadow-[var(--aptly-shadow-md)] focus:shadow-[var(--aptly-shadow-md)]": variant === 'solid',
+               "bg-[var(--aptly-surface)] shadow-[inset_0_0_0_1px_var(--aptly-border-light)]": variant === 'solid',
                "aptly-glass border-none shadow-none focus:bg-[rgba(255,255,255,0.9)]": variant === 'glass',
                "bg-[var(--aptly-bg)] border-none shadow-none focus:bg-[var(--aptly-surface)] focus:shadow-[var(--aptly-shadow-sm)]": variant === 'minimal'
             },
-            
-            iconPosition === 'left' ? "pl-10 pr-12" : "pl-4 pr-10"
+            iconPosition === 'left' ? "pl-10" : "pl-4",
+            shortcut ? "pr-14" : "pr-4"
           )}
+          style={{
+            height: inputSize === 'sm' ? 'var(--aptly-h-sm)' : inputSize === 'lg' ? 'var(--aptly-h-lg)' : 'var(--aptly-h-md)',
+            fontSize: 'calc(0.875rem * var(--aptly-font-scale))',
+            ...style
+          }}
           {...props}
         />
         
-        {iconPosition === 'right' && (
-          <div className="absolute right-3 z-10 text-[var(--aptly-text-muted)] pointer-events-none">
-            <Search size={inputSize === 'sm' ? 14 : inputSize === 'lg' ? 20 : 18} strokeWidth={2} />
-          </div>
-        )}
-        
         {shortcut && (
-          <div className="absolute right-3 bg-[var(--aptly-bg)] text-[var(--aptly-text-muted)] px-1.5 py-[2px] rounded-[var(--aptly-radius-sm)] text-[10px] font-semibold tracking-widest leading-none border border-[var(--aptly-border-light)] shadow-inner z-10 pointer-events-none">
+          <div className="absolute right-3 bg-[var(--aptly-bg)] text-[var(--aptly-text-muted)] px-1.5 py-[2px] rounded-[var(--aptly-radius-sm)] border border-[var(--aptly-border-light)] z-10 pointer-events-none font-bold" style={{ fontSize: 'calc(10px * var(--aptly-font-scale))'}}>
             {shortcut}
           </div>
         )}

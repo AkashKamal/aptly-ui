@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 import { cn } from '../utils';
 
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
@@ -6,15 +6,21 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
 }
 
 export const Header = React.forwardRef<HTMLElement, HeaderProps>(
-  ({ className, sticky = true, children, ...props }, ref) => {
+  ({ className, sticky = true, children, style, ...props }, ref) => {
     return (
       <header
         ref={ref}
         className={cn(
-          "flex items-center justify-between px-6 h-16 w-full bg-[var(--aptly-surface)] border-b border-[var(--aptly-border-light)] z-40 transition-shadow duration-[var(--aptly-transition)]",
+          "flex items-center justify-between w-full bg-[var(--aptly-surface)] border-b border-[var(--aptly-border-light)] z-40 transition-shadow duration-[var(--aptly-transition)]",
           sticky ? "sticky top-0 shadow-[var(--aptly-shadow-sm)]" : "relative",
           className
         )}
+        style={{
+          height: 'var(--aptly-header-h)',
+          paddingLeft: 'var(--aptly-pad-lg)',
+          paddingRight: 'var(--aptly-pad-lg)',
+          ...style
+        }}
         {...props}
       >
         {children}

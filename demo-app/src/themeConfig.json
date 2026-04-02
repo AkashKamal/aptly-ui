@@ -1,0 +1,12 @@
+{
+  "primary": "#8b5cf6",
+  "surface": "#ffffff",
+  "bg": "#f5f3ff",
+  "text": "#1e1b4b",
+  "radius": "24px",
+  "fontFamily": "Outfit",
+  "density": "compact",
+  "cardStyle": "solid",
+  "focusRingStyle": "subtle",
+  "animationSpeed": "fluid"
+}
