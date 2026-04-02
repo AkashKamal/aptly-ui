@@ -119,7 +119,7 @@ export default function App() {
       <div className="flex h-screen w-full bg-[var(--aptly-bg)] text-[var(--aptly-text)] overflow-hidden transition-colors duration-500 font-body">
         
         {/* SIDEBAR NAVIGATION */}
-        <Sidebar collapsed={sidebarCollapsed} className="z-20 border-r border-[var(--aptly-border-light)] shadow-none">
+        <Sidebar collapsed={sidebarCollapsed} style={{ minWidth: sidebarCollapsed ? "var(--aptly-sidebar-w-collapsed)" : "var(--aptly-sidebar-w)", flexShrink: 0 }} className="z-20 border-r border-[var(--aptly-border-light)] shadow-none">
           <div className="flex items-center gap-3 px-6 h-16 border-b border-[var(--aptly-border-light)] shrink-0 overflow-hidden">
             <div className="w-8 h-8 rounded-lg bg-[var(--aptly-primary)] flex items-center justify-center shrink-0 shadow-lg shadow-[var(--aptly-primary)]/20">
                <Layers size={18} className="text-white" />
@@ -637,6 +637,79 @@ export default function App() {
                                   </Breadcrumb>
                                </div>
                             </div>
+                         </div>
+                      </section>
+
+                      <section className="space-y-6 lg:col-span-2">
+                         <div className="flex items-center gap-2 mb-4">
+                            <MousePointer2 size={18} className="text-[var(--aptly-primary)]" />
+                            <h2 className="text-xl font-bold">Advanced Dropdown Patterns</h2>
+                         </div>
+                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <ContentCard className="flex flex-col items-center justify-center p-8 space-y-4">
+                               <p className="text-xs font-bold uppercase tracking-widest text-[var(--aptly-text-muted)]">Standard Menu</p>
+                               <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                     <Button variant="outline">Options <Menu size={14} className="ml-2" /></Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent className="w-56">
+                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                     <DropdownMenuSeparator />
+                                     <DropdownMenuItem>Profile <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut></DropdownMenuItem>
+                                     <DropdownMenuItem>Billing <DropdownMenuShortcut>⌘B</DropdownMenuShortcut></DropdownMenuItem>
+                                     <DropdownMenuItem>Settings <DropdownMenuShortcut>⌘S</DropdownMenuShortcut></DropdownMenuItem>
+                                     <DropdownMenuSeparator />
+                                     <DropdownMenuItem className="text-[var(--aptly-error)]">Logout</DropdownMenuItem>
+                                  </DropdownMenuContent>
+                               </DropdownMenu>
+                            </ContentCard>
+
+                            <ContentCard className="flex flex-col items-center justify-center p-8 space-y-4">
+                               <p className="text-xs font-bold uppercase tracking-widest text-[var(--aptly-text-muted)]">Nested Patterns</p>
+                               <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                     <Button variant="outline">Advanced <ArrowUpRight size={14} className="ml-2" /></Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent className="w-56">
+                                     <DropdownMenuGroup>
+                                        <DropdownMenuItem>Team</DropdownMenuItem>
+                                        <DropdownMenuSub>
+                                           <DropdownMenuSubTrigger>Invite Users</DropdownMenuSubTrigger>
+                                           <DropdownMenuPortal>
+                                              <DropdownMenuSubContent>
+                                                 <DropdownMenuItem>Email</DropdownMenuItem>
+                                                 <DropdownMenuItem>Link</DropdownMenuItem>
+                                                 <DropdownMenuSeparator />
+                                                 <DropdownMenuItem>More...</DropdownMenuItem>
+                                              </DropdownMenuSubContent>
+                                           </DropdownMenuPortal>
+                                        </DropdownMenuSub>
+                                     </DropdownMenuGroup>
+                                  </DropdownMenuContent>
+                               </DropdownMenu>
+                            </ContentCard>
+
+                            <ContentCard className="flex flex-col items-center justify-center p-8 space-y-4">
+                               <p className="text-xs font-bold uppercase tracking-widest text-[var(--aptly-text-muted)]">Selection States</p>
+                               <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                     <Button variant="outline">Config <SettingsIcon size={14} className="ml-2" /></Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent className="w-56">
+                                     <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+                                     <DropdownMenuSeparator />
+                                     <DropdownMenuCheckboxItem checked>Show Status Bar</DropdownMenuCheckboxItem>
+                                     <DropdownMenuCheckboxItem>Show Activity</DropdownMenuCheckboxItem>
+                                     <DropdownMenuSeparator />
+                                     <DropdownMenuLabel>Scale</DropdownMenuLabel>
+                                     <DropdownMenuSeparator />
+                                     <DropdownMenuRadioGroup value="1">
+                                        <DropdownMenuRadioItem value="1">Standard (1x)</DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="0.8">Compact (0.8x)</DropdownMenuRadioItem>
+                                     </DropdownMenuRadioGroup>
+                                  </DropdownMenuContent>
+                               </DropdownMenu>
+                            </ContentCard>
                          </div>
                       </section>
 

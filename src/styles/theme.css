@@ -34,8 +34,9 @@
   --aptly-h-md: calc(2.5rem * var(--aptly-scale));
   --aptly-h-lg: calc(3.5rem * var(--aptly-scale));
   --aptly-header-h: calc(4rem * var(--aptly-scale));
-  --aptly-sidebar-w: calc(16rem * var(--aptly-scale));
+  --aptly-sidebar-w: calc(20rem * var(--aptly-scale));
   --aptly-sidebar-w-collapsed: calc(5rem * var(--aptly-scale));
+  --aptly-drawer-w: calc(24rem * var(--aptly-scale));
 
   /* Visual Geometry */
   --aptly-radius-sm: 8px;

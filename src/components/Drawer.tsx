@@ -37,8 +37,8 @@ const DrawerContent = React.forwardRef<
       className={cn(
         "fixed z-50 bg-[var(--aptly-surface)] shadow-[var(--aptly-shadow-lg)] transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500 aptly-hardware outline-none",
         {
-          "inset-y-0 left-0 h-full w-[var(--aptly-sidebar-w)] border-r border-[var(--aptly-border-light)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left": position === 'left',
-          "inset-y-0 right-0 h-full w-[var(--aptly-sidebar-w)] border-l border-[var(--aptly-border-light)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right": position === 'right',
+          "inset-y-0 left-0 h-full w-[var(--aptly-drawer-w)] min-w-[var(--aptly-drawer-w)] border-r border-[var(--aptly-border-light)] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left": position === 'left',
+          "inset-y-0 right-0 h-full w-[var(--aptly-drawer-w)] min-w-[var(--aptly-drawer-w)] border-l border-[var(--aptly-border-light)] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right": position === 'right',
           "inset-x-0 bottom-0 min-h-[50vh] max-h-[90vh] border-t border-[var(--aptly-border-light)] rounded-t-[var(--aptly-radius-lg)] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom": position === 'bottom',
         },
         className
