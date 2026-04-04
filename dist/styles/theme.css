@@ -1,0 +1,107 @@
+
+
+:root {
+  /* Core Colors */
+  --aptly-primary: #111827; 
+  --aptly-primary-hover: #374151;
+  --aptly-primary-bg: #F3F4F6;
+  --aptly-surface: #FFFFFF;
+  --aptly-surface-glass: rgba(255, 255, 255, 0.75);
+  --aptly-bg: #F9FAFB;
+  --aptly-text: #111827;
+  --aptly-text-secondary: #4B5563;
+  --aptly-text-muted: #9CA3AF;
+  --aptly-border: rgba(0, 0, 0, 0.08); 
+  --aptly-border-light: rgba(0, 0, 0, 0.04);
+  --aptly-border-focus: rgba(17, 24, 39, 0.4); 
+  --aptly-success: #10B981;
+  --aptly-warning: #F59E0B;
+  --aptly-error: #EF4444;
+
+  /* Global Scales (The "Brain" of the UI) */
+  --aptly-scale: 1;
+  --aptly-font-scale: 1;
+
+  /* Dynamic Spacing (Proportional Scaling) */
+  --aptly-pad-xs: calc(0.25rem * var(--aptly-scale));
+  --aptly-pad-sm: calc(0.5rem * var(--aptly-scale));
+  --aptly-pad-md: calc(1rem * var(--aptly-scale));
+  --aptly-pad-lg: calc(1.5rem * var(--aptly-scale));
+  --aptly-pad-xl: calc(2.5rem * var(--aptly-scale));
+
+  /* Dynamic Heights (Fixes "Text bigger than box") */
+  --aptly-h-sm: calc(2rem * var(--aptly-scale));
+  --aptly-h-md: calc(2.5rem * var(--aptly-scale));
+  --aptly-h-lg: calc(3.5rem * var(--aptly-scale));
+  --aptly-header-h: calc(4rem * var(--aptly-scale));
+  --aptly-sidebar-w: calc(20rem * var(--aptly-scale));
+  --aptly-sidebar-w-collapsed: calc(5rem * var(--aptly-scale));
+  --aptly-drawer-w: calc(24rem * var(--aptly-scale));
+
+  /* Visual Geometry */
+  --aptly-radius-sm: 8px;
+  --aptly-radius: 12px;
+  --aptly-radius-lg: 16px;
+  --aptly-radius-full: 9999px;
+  
+  --aptly-shadow-sm: 0 4px 12px -2px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.02);
+  --aptly-shadow-md: 0 10px 30px -4px rgba(0,0,0,0.05), 0 4px 10px -4px rgba(0,0,0,0.03);
+  --aptly-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.08), 0 10px 20px -8px rgba(0,0,0,0.04);
+
+  /* Animation Engine */
+  --aptly-speed: 250ms;
+  --aptly-ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
+  --aptly-transition: var(--aptly-speed) var(--aptly-ease-spring);
+  
+  --aptly-ring-width: 2px;
+  --aptly-ring-offset: 2px;
+  --aptly-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background: var(--aptly-bg);
+  color: var(--aptly-text);
+  font-family: var(--aptly-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.aptly-theme-root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Structural Utility Classes */
+.aptly-glass {
+  background: var(--aptly-surface-glass);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: inset 0 0 0 0.5px var(--aptly-border-light);
+}
+
+.aptly-hardware {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Standard Animations */
+@keyframes aptly-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes aptly-zoom-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes aptly-slide-in-bottom { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes aptly-accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
+@keyframes aptly-accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+
+.animate-in { animation-duration: var(--aptly-speed); animation-timing-function: var(--aptly-ease-spring); animation-fill-mode: forwards; }
+.fade-in { animation-name: aptly-fade-in; }
+.zoom-in-95 { animation-name: aptly-zoom-in; }
+.slide-in-from-bottom-2 { animation-name: aptly-slide-in-bottom; }
+.data-\[state\=open\]\:animate-accordion-down { animation: aptly-accordion-down 0.2s ease-out; }
+.data-\[state\=closed\]\:animate-accordion-up { animation: aptly-accordion-up 0.2s ease-out; }
