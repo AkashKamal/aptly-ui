@@ -11,15 +11,13 @@ This UI pushes past traditional design tokens into premium, GPU-accelerated terr
 - **Dynamic Density:** All internal paddings (`var(--aptly-pad-md)`) are computationally scaled in CSS via a global density configuration multiplier token.
 
 ## Provided Components
-All components feature extensive internal variations (e.g. sizes, layouts, visual geometries) out of the box:
-- `Button` (Sizes, Variants, Pills/Squares)
-- `ContentCard` (Dynamic elevations, interactions, glass/flat renders)
-- `TextInput` & `SearchBar` (Sizes, fluid icons, shortcut badges)
-- `Avatar` & `Profile`
-- `Badge` & `Skeleton`
-- `Switch`, `Checkbox`, `Radio`, `Slider`, `ProgressBar`
-- `Modal`, `Drawer`, `Tooltip`
-- `Sidebar`, `Header`, `Tabs`, `DataTable`
+All components feature extensive internal variations (e.g. sizes, layouts, visual geometries) out of the box. Below is the exhaustive list of components available for import from `@aptly/ui`:
+
+- **Layout & Structure:** `Card`, `ContentCard`, `Drawer`, `Header`, `Modal`, `ScrollArea`, `Separator`, `Sidebar`, `Tabs`
+- **Forms & Inputs:** `Checkbox`, `Label`, `SearchBar`, `Select`, `Slider`, `Switch`, `TextInput`, `Textarea`, `Toggle`, `ToggleGroup`
+- **Data & Display:** `Accordion`, `Alert`, `Avatar`, `Badge`, `Breadcrumb`, `DataTable`, `Profile`, `ProgressBar`, `Skeleton`
+- **Overlay & Interaction:** `DropdownMenu`, `Popover`, `Tooltip`
+- **Theming:** `ThemeProvider`
 
 ---
 
