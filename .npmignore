@@ -1,0 +1,8 @@
+node_modules
+src
+tests
+*.test.ts
+*.test.tsx
+tsconfig.json
+tsup.config.ts
+vite.config.ts

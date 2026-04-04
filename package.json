@@ -11,12 +11,15 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles/*": "./src/styles/*"
+    "./styles/*": {
+      "style": "./dist/styles/*",
+      "default": "./dist/styles/*"
+    }
   },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "build": "tsup src/index.ts --format cjs,esm --dts && mkdir -p dist/styles && cp -r src/styles/* dist/styles/",
     "dev": "vite"
   },
   "keywords": [],
