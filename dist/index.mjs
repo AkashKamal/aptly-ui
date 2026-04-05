@@ -97,6 +97,21 @@ function Tooltip({ content, children, position = "top", className }) {
 // src/components/ThemeProvider.tsx
 import { jsx as jsx3 } from "react/jsx-runtime";
 var ThemeContext = createContext(null);
+var MANAGED_CSS_VARS = [
+  "--aptly-primary",
+  "--aptly-surface",
+  "--aptly-bg",
+  "--aptly-text",
+  "--aptly-radius",
+  "--aptly-radius-sm",
+  "--aptly-radius-lg",
+  "--aptly-scale",
+  "--aptly-font-scale",
+  "--aptly-speed",
+  "--aptly-font-body",
+  "--aptly-ring-width",
+  "--aptly-ring-offset"
+];
 function ThemeProvider({ config = {}, children }) {
   useEffect(() => {
     const root = document.documentElement;
@@ -104,7 +119,12 @@ function ThemeProvider({ config = {}, children }) {
     if (config.surface) root.style.setProperty("--aptly-surface", config.surface);
     if (config.bg) root.style.setProperty("--aptly-bg", config.bg);
     if (config.text) root.style.setProperty("--aptly-text", config.text);
-    if (config.radius) root.style.setProperty("--aptly-radius", config.radius);
+    if (config.radius) {
+      const radiusNum = parseInt(config.radius, 10);
+      root.style.setProperty("--aptly-radius", config.radius);
+      root.style.setProperty("--aptly-radius-sm", `${Math.max(4, radiusNum - 4)}px`);
+      root.style.setProperty("--aptly-radius-lg", `${radiusNum + 4}px`);
+    }
     if (config.density === "compact") {
       root.style.setProperty("--aptly-scale", "0.75");
       root.style.setProperty("--aptly-font-scale", "0.85");
@@ -118,9 +138,22 @@ function ThemeProvider({ config = {}, children }) {
     if (config.animationSpeed === "instant") root.style.setProperty("--aptly-speed", "0ms");
     else if (config.animationSpeed === "fast") root.style.setProperty("--aptly-speed", "150ms");
     else root.style.setProperty("--aptly-speed", "400ms");
+    if (config.focusRingStyle === "bold") {
+      root.style.setProperty("--aptly-ring-width", "3px");
+      root.style.setProperty("--aptly-ring-offset", "3px");
+    } else if (config.focusRingStyle === "none") {
+      root.style.setProperty("--aptly-ring-width", "0px");
+      root.style.setProperty("--aptly-ring-offset", "0px");
+    } else {
+      root.style.setProperty("--aptly-ring-width", "2px");
+      root.style.setProperty("--aptly-ring-offset", "2px");
+    }
     if (config.fontFamily) {
       root.style.setProperty("--aptly-font-body", `"${config.fontFamily}", system-ui, sans-serif`);
     }
+    return () => {
+      MANAGED_CSS_VARS.forEach((v) => root.style.removeProperty(v));
+    };
   }, [config]);
   return /* @__PURE__ */ jsx3(ThemeContext.Provider, { value: config, children: /* @__PURE__ */ jsx3(TooltipProvider, { children: /* @__PURE__ */ jsx3("div", { className: `aptly-theme-root aptly-card-${config.cardStyle || "solid"}`, children }) }) });
 }

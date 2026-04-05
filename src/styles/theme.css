@@ -1,8 +1,8 @@
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
 :root {
   /* Core Colors */
-  --aptly-primary: #111827; 
+  --aptly-primary: #111827;
   --aptly-primary-hover: #374151;
   --aptly-primary-bg: #F3F4F6;
   --aptly-surface: #FFFFFF;
@@ -11,9 +11,9 @@
   --aptly-text: #111827;
   --aptly-text-secondary: #4B5563;
   --aptly-text-muted: #9CA3AF;
-  --aptly-border: rgba(0, 0, 0, 0.08); 
+  --aptly-border: rgba(0, 0, 0, 0.08);
   --aptly-border-light: rgba(0, 0, 0, 0.04);
-  --aptly-border-focus: rgba(17, 24, 39, 0.4); 
+  --aptly-border-focus: rgba(17, 24, 39, 0.4);
   --aptly-success: #10B981;
   --aptly-warning: #F59E0B;
   --aptly-error: #EF4444;
@@ -43,27 +43,32 @@
   --aptly-radius: 12px;
   --aptly-radius-lg: 16px;
   --aptly-radius-full: 9999px;
-  
-  --aptly-shadow-sm: 0 4px 12px -2px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.02);
-  --aptly-shadow-md: 0 10px 30px -4px rgba(0,0,0,0.05), 0 4px 10px -4px rgba(0,0,0,0.03);
-  --aptly-shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.08), 0 10px 20px -8px rgba(0,0,0,0.04);
+
+  --aptly-shadow-sm: 0 4px 12px -2px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  --aptly-shadow-md: 0 10px 30px -4px rgba(0, 0, 0, 0.05), 0 4px 10px -4px rgba(0, 0, 0, 0.03);
+  --aptly-shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 10px 20px -8px rgba(0, 0, 0, 0.04);
 
   /* Animation Engine */
   --aptly-speed: 250ms;
   --aptly-ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
   --aptly-transition: var(--aptly-speed) var(--aptly-ease-spring);
-  
+
   --aptly-ring-width: 2px;
   --aptly-ring-offset: 2px;
   --aptly-font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   background: var(--aptly-bg);
@@ -93,15 +98,82 @@ html, body, #root {
 }
 
 /* Standard Animations */
-@keyframes aptly-fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes aptly-zoom-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-@keyframes aptly-slide-in-bottom { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes aptly-accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
-@keyframes aptly-accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+@keyframes aptly-fade-in {
+  from {
+    opacity: 0;
+  }
 
-.animate-in { animation-duration: var(--aptly-speed); animation-timing-function: var(--aptly-ease-spring); animation-fill-mode: forwards; }
-.fade-in { animation-name: aptly-fade-in; }
-.zoom-in-95 { animation-name: aptly-zoom-in; }
-.slide-in-from-bottom-2 { animation-name: aptly-slide-in-bottom; }
-.data-\[state\=open\]\:animate-accordion-down { animation: aptly-accordion-down 0.2s ease-out; }
-.data-\[state\=closed\]\:animate-accordion-up { animation: aptly-accordion-up 0.2s ease-out; }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aptly-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aptly-slide-in-bottom {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes aptly-accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes aptly-accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+.animate-in {
+  animation-duration: var(--aptly-speed);
+  animation-timing-function: var(--aptly-ease-spring);
+  animation-fill-mode: forwards;
+}
+
+.fade-in {
+  animation-name: aptly-fade-in;
+}
+
+.zoom-in-95 {
+  animation-name: aptly-zoom-in;
+}
+
+.slide-in-from-bottom-2 {
+  animation-name: aptly-slide-in-bottom;
+}
+
+.data-\[state\=open\]\:animate-accordion-down {
+  animation: aptly-accordion-down 0.2s ease-out;
+}
+
+.data-\[state\=closed\]\:animate-accordion-up {
+  animation: aptly-accordion-up 0.2s ease-out;
+}

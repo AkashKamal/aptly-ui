@@ -1,56 +1,219 @@
-# @aptly/ui Component Library (Hyper-Elegant V2)
+# @aptly/ui — Hyper-Elegant React Component Library
 
-A premium, hyper-elegant, and blazing-fast React component library built for modular MSME applications. 
-This library powers the frontend UI for the Aptly Modular Architecture.
+> **For AI Agents:** This is the frontend UI library for the Aptly modular platform. Import components from `@aptly/ui` and the theme CSS from `@aptly/ui/styles`. All components use CSS variable tokens — never use hardcoded Tailwind values that contradict the theme.
 
-## Ideology: Hyper-Elegant & Blazing Fast
-This UI pushes past traditional design tokens into premium, GPU-accelerated territory:
-- **Hardware-Accelerated Speed:** We strictly use `translateZ(0)` and `transform3d` CSS scaling. This forces the client GPU to natively render micro-interactions (like Button hovers or Checkbox checks) at buttery 60fps.
-- **Micro-Borders & Glassmorphism:** We avoid harsh `1px` lines in favor of sub-pixel Retina inset box-shadows (`inset 0 0 0 1.5px rgba(...)`) and frosted glass overlays (`backdrop-filter`).
-- **Spring Easing:** Hard transitions are replaced with an organic spring cubic bezier (`cubic-bezier(0.19, 1, 0.22, 1)`) for a hyper-realistic, fluid feel.
-- **Dynamic Density:** All internal paddings (`var(--aptly-pad-md)`) are computationally scaled in CSS via a global density configuration multiplier token.
+## Installation
 
-## Provided Components
-All components feature extensive internal variations (e.g. sizes, layouts, visual geometries) out of the box. Below is the exhaustive list of components available for import from `@aptly/ui`:
+```bash
+# From GitHub (recommended for Aptly projects)
+npm install github:AptlyOrg/aptly-ui
+```
 
-- **Layout & Structure:** `Card`, `ContentCard`, `Drawer`, `Header`, `Modal`, `ScrollArea`, `Separator`, `Sidebar`, `Tabs`
-- **Forms & Inputs:** `Checkbox`, `Label`, `SearchBar`, `Select`, `Slider`, `Switch`, `TextInput`, `Textarea`, `Toggle`, `ToggleGroup`
-- **Data & Display:** `Accordion`, `Alert`, `Avatar`, `Badge`, `Breadcrumb`, `DataTable`, `Profile`, `ProgressBar`, `Skeleton`
-- **Overlay & Interaction:** `DropdownMenu`, `Popover`, `Tooltip`
-- **Theming:** `ThemeProvider`
+### Peer Dependencies (must be in your app)
 
----
+```bash
+npm install react react-dom tailwindcss
+```
 
-# <for_ai_agents> 🤖 STRICT HAND-OFF INSTRUCTIONS
-**CRITICAL: If you are an AI agent picking up this codebase to continue building a client application, you MUST adhere strictly to the following rules to maintain the aesthetic architecture.**
+## Setup — Two Required Steps
 
-### 1. Processing `aptly-theme.json`
-If the user hands you an `aptly-theme.json` file (exported from the Configurator module), you must use it as the fundamental design config for the incoming client app. 
+### Step 1: Import the theme CSS
 
-Example integration pattern when scaffolding a new React app:
+In your app's root layout or entry point, import the theme CSS **once**:
+
+```typescript
+import '@aptly/ui/styles';
+```
+
+This loads all CSS variable tokens (colors, spacing, shadows, animations, radii) that every component relies on.
+
+### Step 2: Wrap your app in ThemeProvider
+
 ```tsx
-import themeConfig from './path/to/aptly-theme.json'; // The exported blob
-import { ThemeProvider, Header, Sidebar, ContentCard, Button } from '@aptly/ui';
+import { ThemeProvider } from '@aptly/ui';
 
-// Note: Config includes complex tuning like 'density', 'cardStyle', 'animationSpeed', 'focusRingStyle'
+// Default theme (or load from aptly-theme.json)
 export default function RootLayout({ children }) {
   return (
-    <ThemeProvider config={themeConfig}>
-       <div className="flex h-screen bg-[var(--aptly-bg)]">
-         <Sidebar collapsed={false}>...</Sidebar>
-         <div className="flex-1 flex flex-col min-w-0">
-            <Header>...</Header>
-            <main className="p-8">{children}</main>
-         </div>
-       </div>
+    <ThemeProvider config={{}}>
+      {children}
     </ThemeProvider>
-  )
+  );
 }
 ```
 
-### 2. Strict Coding Rules for New UI Component Work
-- **NEVER** build structural elements with raw Tailwind `transition-all duration-200`. You **MUST** use the custom tokens (`duration-[var(--aptly-transition)]`, `ease-[var(--aptly-ease-spring)]`).
-- **ALWAYS** include `aptly-hardware` class on anything that moves or scales on hover to prevent repaints.
-- **NEVER** use explicit pixel padding classes (`p-4`). Always use semantic padding variables (`p-[var(--aptly-pad-md)]`) so the entire UI scales beautifully when the user toggles the global `Density` Config.
-- **ALWAYS** wrap dynamic class strings in the exported `cn()` utility function from `src/utils.ts`.
+---
+
+## <for_ai_agents> 🤖 AI AGENT INTEGRATION GUIDE
+
+**CRITICAL: Read this entire section before writing ANY frontend code for an Aptly client application.**
+
+### Setup Pattern (Next.js App Router)
+
+```tsx
+// app/layout.tsx
+import '@aptly/ui/styles';  // REQUIRED — loads all CSS tokens
+import themeConfig from './aptly-theme.json';  // Exported from showcase configurator
+import { ThemeProvider, Sidebar, SidebarItem, Header } from '@aptly/ui';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeProvider config={themeConfig}>
+          <div className="flex h-screen bg-[var(--aptly-bg)]">
+            <Sidebar collapsed={false}>
+              <SidebarItem icon={<DashboardIcon />} active>Dashboard</SidebarItem>
+              <SidebarItem icon={<UsersIcon />}>Clients</SidebarItem>
+            </Sidebar>
+            <div className="flex-1 flex flex-col min-w-0">
+              <Header>...</Header>
+              <main className="flex-1 overflow-y-auto p-[var(--aptly-pad-lg)]">
+                {children}
+              </main>
+            </div>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Processing `aptly-theme.json`
+
+If the user provides an `aptly-theme.json` file (exported from the Showcase Configurator), import it and pass it to `ThemeProvider`:
+
+```json
+{
+  "primary": "#10b981",
+  "surface": "#111827",
+  "bg": "#030712",
+  "text": "#f9fafb",
+  "radius": "12px",
+  "fontFamily": "Inter",
+  "density": "comfortable",
+  "cardStyle": "solid",
+  "focusRingStyle": "subtle",
+  "animationSpeed": "fluid"
+}
+```
+
+All fields are optional. ThemeProvider applies them as CSS variable overrides on `:root`.
+
+### Theme Config Reference
+
+| Property | Type | Default | Effect |
+|---|---|---|---|
+| `primary` | CSS color | `#111827` | Primary accent color for buttons, badges, active states |
+| `surface` | CSS color | `#FFFFFF` | Card/panel background |
+| `bg` | CSS color | `#F9FAFB` | Page background |
+| `text` | CSS color | `#111827` | Primary text color |
+| `radius` | CSS length | `12px` | Border radius (auto-cascades to sm/lg variants) |
+| `fontFamily` | Font name | `Inter` | Body font |
+| `density` | `compact` \| `comfortable` \| `spacious` | `comfortable` | Global UI scaling (affects all padding, heights, font sizes) |
+| `cardStyle` | `solid` \| `glass` \| `flat` | `solid` | Card rendering mode |
+| `focusRingStyle` | `subtle` \| `bold` \| `none` | `subtle` | Keyboard focus indicator thickness |
+| `animationSpeed` | `instant` \| `fast` \| `fluid` | `fluid` | Global transition speed |
+
+### Strict Coding Rules
+
+1. **NEVER** use hardcoded Tailwind classes for spacing, colors, or radii that contradict the theme.
+   - ❌ `p-4`, `rounded-lg`, `bg-gray-100`, `text-gray-900`
+   - ✅ `p-[var(--aptly-pad-md)]`, `rounded-[var(--aptly-radius)]`, `bg-[var(--aptly-bg)]`, `text-[var(--aptly-text)]`
+
+2. **ALWAYS** include `aptly-hardware` class on animated/hovered elements:
+   ```tsx
+   <div className="aptly-hardware transition-all duration-[var(--aptly-transition)]">
+   ```
+
+3. **ALWAYS** use the `cn()` utility for dynamic class strings:
+   ```tsx
+   import { cn } from '@aptly/ui';
+   <div className={cn("base-class", isActive && "active-class")} />
+   ```
+
+4. **NEVER** build raw structural elements. Use the provided components.
+
+### Available CSS Variable Tokens
+
+```
+--aptly-primary          --aptly-primary-hover     --aptly-primary-bg
+--aptly-surface          --aptly-surface-glass     --aptly-bg
+--aptly-text             --aptly-text-secondary    --aptly-text-muted
+--aptly-border           --aptly-border-light      --aptly-border-focus
+--aptly-success          --aptly-warning           --aptly-error
+--aptly-scale            --aptly-font-scale
+--aptly-pad-xs/sm/md/lg/xl
+--aptly-h-sm/md/lg       --aptly-header-h
+--aptly-sidebar-w        --aptly-sidebar-w-collapsed  --aptly-drawer-w
+--aptly-radius-sm        --aptly-radius             --aptly-radius-lg  --aptly-radius-full
+--aptly-shadow-sm/md/lg
+--aptly-speed            --aptly-ease-spring        --aptly-transition
+--aptly-ring-width       --aptly-ring-offset
+--aptly-font-body
+```
+
+### Complete Component Reference
+
+#### Layout & Structure
+
+| Component | Import | Key Props |
+|---|---|---|
+| `Sidebar` | `{ Sidebar, SidebarItem }` | `collapsed?: boolean` |
+| `Header` | `{ Header }` | Standard `div` props |
+| `Card` | `{ Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }` | `variant?: 'solid' \| 'glass' \| 'flat'` |
+| `ContentCard` | `{ ContentCard }` | `elevation?: 1\|2\|3`, `interactive?: boolean` |
+| `Modal` | `{ Modal, ModalContent, ModalHeader, ModalTitle, ModalTrigger, ModalClose, ModalFooter, ModalDescription }` | `variant?: 'standard' \| 'alert' \| 'fullscreen'` |
+| `Drawer` | `{ Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription }` | `position?: 'right' \| 'left'` |
+| `Tabs` | `{ Tabs }` — uses `Tabs.List`, `Tabs.Trigger`, `Tabs.Content` | `variant?: 'underline' \| 'pills' \| 'vertical'` |
+| `ScrollArea` | `{ ScrollArea }` | Standard scroll container |
+| `Separator` | `{ Separator }` | `orientation?: 'horizontal' \| 'vertical'` |
+
+#### Forms & Inputs
+
+| Component | Import | Key Props |
+|---|---|---|
+| `Button` | `{ Button }` | `variant?: 'solid'\|'outline'\|'ghost'\|'glass'\|'neutral'`, `size?: 'sm'\|'md'\|'lg'`, `shape?: 'default'\|'pill'\|'square'`, `fullWidth?: boolean` |
+| `TextInput` | `{ TextInput }` | `label?: string`, `error?: string` |
+| `Textarea` | `{ Textarea }` | Standard textarea props |
+| `Checkbox` | `{ Checkbox }` | `label?: string` |
+| `Switch` | `{ Switch }` | Standard switch props |
+| `Select` | `{ Select, SelectTrigger, SelectValue, SelectContent, SelectItem }` | Radix Select API |
+| `Slider` | `{ Slider }` | `min`, `max`, `step`, `defaultValue` |
+| `SearchBar` | `{ SearchBar }` | `placeholder`, `inputSize?: 'sm'\|'md'\|'lg'`, `variant?: 'solid'\|'ghost'` |
+| `Label` | `{ Label }` | Radix Label API |
+| `Toggle` | `{ Toggle }` | Standard toggle props |
+| `ToggleGroup` | `{ ToggleGroup, ToggleGroupItem }` | `type?: 'single'\|'multiple'` |
+
+#### Data & Display
+
+| Component | Import | Key Props |
+|---|---|---|
+| `DataTable` | `{ DataTable }` | `columns: Column[]`, `data: any[]`, `density?: string` |
+| `Badge` | `{ Badge }` | `variant?: 'primary'\|'success'\|'warning'\|'error'\|'neutral'`, `appearance?: 'solid'\|'soft'` |
+| `Avatar` | `{ Avatar }` | `src?: string`, `fallback: string`, `size?: 'sm'\|'md'\|'lg'` |
+| `Alert` | `{ Alert, AlertTitle, AlertDescription }` | `variant?: 'default'\|'success'\|'warning'\|'error'` |
+| `ProgressBar` | `{ ProgressBar }` | `value: number`, `size?: 'sm'\|'md'\|'lg'` |
+| `Skeleton` | `{ Skeleton }` | `width`, `height`, `variant` |
+| `Profile` | `{ Profile }` | `name: string`, `email?: string` |
+| `Breadcrumb` | `{ Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator }` | Standard breadcrumb API |
+| `Accordion` | `{ Accordion, AccordionItem, AccordionTrigger, AccordionContent }` | `type?: 'single'\|'multiple'`, `collapsible?: boolean` |
+
+#### Overlay & Interaction
+
+| Component | Import | Key Props |
+|---|---|---|
+| `DropdownMenu` | `{ DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal, DropdownMenuGroup, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem }` | Radix DropdownMenu API |
+| `Popover` | `{ Popover, PopoverTrigger, PopoverContent }` | Radix Popover API |
+| `Tooltip` | `{ Tooltip, TooltipProvider }` | `content: string`, `position?: 'top'\|'bottom'\|'left'\|'right'` |
+
+#### Utilities
+
+| Export | Usage |
+|---|---|
+| `cn(...classes)` | Tailwind-safe class merging utility |
+| `ThemeProvider` | Root theme wrapper (required) |
+| `useAptlyTheme()` | Hook to access current theme config |
+
 </for_ai_agents>

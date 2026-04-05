@@ -1,7 +1,7 @@
 {
-  "name": "aptly-ui",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@aptly/ui",
+  "version": "1.1.0",
+  "description": "Hyper-elegant, GPU-accelerated React component library for the Aptly modular platform. 30+ accessible components with tokenized theming, dynamic density scaling, and glassmorphism support.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -11,21 +11,37 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles/*": {
-      "style": "./dist/styles/*",
-      "default": "./dist/styles/*"
-    }
+    "./styles": "./dist/styles/theme.css",
+    "./styles/*": "./dist/styles/*"
   },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
+    "build": "tsup && mkdir -p dist/styles && cp src/styles/* dist/styles/",
+    "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "tsup src/index.ts --format cjs,esm --dts && mkdir -p dist/styles && cp -r src/styles/* dist/styles/",
     "dev": "vite"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["aptly", "ui", "react", "components", "design-system", "tailwind"],
+  "author": "Aptly",
   "license": "ISC",
   "type": "commonjs",
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "tailwindcss": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": false
+    }
+  },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -41,23 +57,19 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@testing-library/user-event": "^14.6.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.7.0",
-    "recharts": "^3.8.1",
     "tailwind-merge": "^3.5.0"
-  },
-  "peerDependencies": {
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "jsdom": "^29.0.1",
+    "recharts": "^3.8.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.3",
