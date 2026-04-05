@@ -23,13 +23,19 @@
   ],
   "scripts": {
     "build": "tsup && mkdir -p dist/styles && cp src/styles/* dist/styles/",
-    "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "dev": "vite"
   },
-  "keywords": ["aptly", "ui", "react", "components", "design-system", "tailwind"],
+  "keywords": [
+    "aptly",
+    "ui",
+    "react",
+    "components",
+    "design-system",
+    "tailwind"
+  ],
   "author": "Aptly",
   "license": "ISC",
   "type": "commonjs",
