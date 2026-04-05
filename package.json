@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "build": "tsup && mkdir -p dist/styles && cp src/styles/* dist/styles/",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
